@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>jQuery.eachStep() - Step through elements in order</title>
+	<link rel="shortcut icon" href="favicon.png">
+	<link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js"></script>
+	<script src="js/jquery.color.js"></script>
+	<script src="js/jquery.eachStep.js"></script>
+	<script>$(function(){	
+	
+		for(var i=0; i<16; i++){
+			var j = (''+i).substr(-1);			
+			var g = (i>7) ? 'g/' : '';
+			kitteh = 'http://placekitten.com/'+g+'101/10'+j;
+			$("<img>").attr('src',kitteh).appendTo('#demo1');
+		}
+		
+		$('.demo-button').click(function(){
+			var demo = $(this).attr('data-demo');
+			run[demo]();
+			return false;
+		});
+		
+		$('.view-source-button').click(function(){
+			$(this).text( ($(this).text() == 'view source') ? 'hide source' : 'view source' );
+			$(this).parent().parent().find('.view-source').slideToggle();
+			$(this).toggleClass('active');
+			return false;
+		});
+		
+
+		var run = {
+			demo1: function(){
+				$('#demo1 img').hide().eachStep(function(i, el, duration){
+					$(el).fadeIn(duration);
+				});
+			},
+			demo2: function(){
+				
+				var collection = [
+				  '#777777', '#444444', '#222222', '#249adb', 
+				  '#fc41a9', '#ffe200', '#faa653', '#CA355B'
+				];
+
+				/**
+				 * Calling eachStep on a collection
+				 *
+				 * key = the current index in the collection, eg: 2
+				 * val = the current collection value, eg: '#222222'
+				 * duration = the step duration, in this example '600'
+				 */
+				$.eachStep(collection, '800', function(key, val, duration){
+				  // each step of the collection animate the .demo2-box backgroundColor
+				  // (requires the jquery.color plugin)
+				  $('.demo2-box').animate({'backgroundColor': val}, duration);
+				});
+				
+			}
+		};
+		
+		
+	});</script>
+</head>
+<body>
+	
+	<div id="twitter-share"><strong>SHARE</strong>
+	<a href="http://twitter.com/share" class="twitter-share-button" data-text="&quot;jQuery.eachStep&quot; - Step through each element and execute a callback function in order #jquery #plugin" data-count="vertical">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+	</div>
+	
+	<div class="wrapper">
+
+		<div id="header">
+			<h1>jQuery.eachStep()</h1>
+			<p></p>
+			
+			<div id="nav">
+				<a href="https://github.com/mediaupstream/jquery-eachStep">Download <small>{ 518 bytes }</small></a>
+			</div>
+		</div>
+		
+		<div id="intro">
+			
+			<div class="problem">
+				<h2>The Problem:</h2>
+				<p>When you iterate over jQuery objects using <code>$('img').each();</code> your callback function runs instantly on each element, but what if you wanted to <code>fadeOut()</code> each element in order rather than simultaneously? Example:</p><script src="https://gist.github.com/1112359.js?file=gistfile1.js"></script>
+			</div>
+			<div class="solution">
+				<h2>The Solution:</h2>
+				<p>Place the callback functions inside <code>window.setTimeout()</code> and set the timeout <code>duration * i</code> where <code>i</code> is the step number. Example: </p>
+				<script src="https://gist.github.com/1113256.js?file=gistfile1.js"></script>
+				<p style="clear:both">Which is exactly what <code>jQuery.eachStep</code> is doing behind the scenes!</p>
+			</div>
+			<br style="clear:both" />
+		</div>
+		
+		<div id="gallery">
+			
+			<div class="page">
+				<div class="demo" id="demo1">
+					<div class="demo-nav">
+						<h3>Demo One <span>Step through jQuery objects</span></h3>
+						<a href="#" data-demo="demo1" class="demo-button">run demo</a>
+						<a href="#" class="view-source-button">view source</a>
+					</div>
+					<div class="view-source"><script src="https://gist.github.com/1112173.js?file=gistfile1.js"></script></div>
+					
+					
+				</div>
+				
+				<div class="demo" id="demo2">
+					<div class="demo-nav">
+						<h3>Demo Two <span>Step through a Collection</span></h3>
+						<a href="#" data-demo="demo2" class="demo-button">run demo</a>
+						<a href="#" class="view-source-button">view source</a>
+					</div>
+					<div class="view-source"><script src="https://gist.github.com/1113330.js?file=jquery.eachStep.demo2.html"></script></div>
+					<div class="demo2-box">
+						<h3>DEMO BOX</h3>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div id="usage">
+				<h2>USAGE</h2>
+				<p>
+					<strong>$.eachStep( Duration, function(index, Element, duration) ) <span>For use with jQuery Objects</span></strong>
+					<b>Duration</b> Optional string or number determining how long the step will run. default: 200ms <sup>1</sup><br />
+					<b>function(index, Element, duration)</b> A function to execute for each matched element.
+					<br /><br /><br />
+
+					<strong>jQuery.eachStep( Collection, Duration, function(index, Element, duration) ) <span>For use with Collections or Maps</span></strong>
+					<b>Collection</b> The object or array to iterate over.<br />
+					<b>Duration</b> Optional string or number determining how long the step will run. default: 200ms <sup>1</sup><br />
+					<b>function(index, Element, duration)</b> A function to execute for each matched element.
+					<br /><br /><br />
+
+					<sup>1</sup> - Due to limitations with <code>window.setTimeout</code> the actual duration time may be capped at around 4ms to 10ms. <small>(see: <a href="https://developer.mozilla.org/En/Window.setTimeout#section_7">https://developer.mozilla.org/En/Window.setTimeout#section_7</a>)</small>
+					<br />
+					<br /> Click <code>view source</code> on the DEMOs above for more usage examples!
+				</p>
+			</div>
+			
+			
+		</div>
+	</div>
+	
+	<div id="createdBy">
+		<span>&#8734; jQuery.eachStep created by <a href="http://twitter.com/derekanderson" title="Follow Me!">Derek Anderson</a> // <a href="http://mediaupstream.com" title="Savvy Web Design &amp; Development">Media Upstream</a> </span>
+		
+		<span>&#8734; Placeholder kittens thanks to <a href="http://placekitten.com/" title="Can Haz Placekitteh">{placekitten}</a></span>
+		
+	</div>
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	try {
+	var pageTracker = _gat._getTracker("UA-15679084-1");
+	pageTracker._trackPageview();
+	} catch(err) {}</script>
+</body>
+</html>
