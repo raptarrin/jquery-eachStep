@@ -381,7 +381,7 @@ input[type="text"] {
 	padding:18px;
 	position:relative;
 }
-.solution, .problem { min-height:240px; }
+.solution, .problem { min-height:260px; }
 #intro div p { font-size:14px; position:relative; z-index:300;}
 #intro div h2 { color: #53C9FF; text-shadow:1px 1px 1px #fff; font-size:23px; margin:0; padding:0;}
 #intro div h2:before {
@@ -466,3 +466,15 @@ input[type="text"] {
 	text-align:center;
 	padding-bottom:5px;
 }
+
+#demo1 { 	-webkit-transform: translateZ(0); }
+#demo1 img {
+	-moz-transition: 		-moz-transform 		0.8s ease-out;
+	-o-transition: 			-o-transform 			0.8s ease-out;
+	-webkit-transition: -webkit-transform 0.8s ease-out;
+}
+.rotate {
+ -moz-transform: rotate(200deg);  /* FF3.5+ */
+ -o-transform: rotate(200deg);  /* Opera 10.5 */
+ -webkit-transform: rotate(200deg);  /* Saf3.1+, Chrome */
+ }

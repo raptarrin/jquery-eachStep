@@ -31,11 +31,14 @@
 			return false;
 		});
 		
-
+		$('#demo1 img').click(function(){
+			$(this).toggleClass('rotate');
+		});
+		
 		var run = {
 			demo1: function(){
-				$('#demo1 img').hide().eachStep(function(i, el, duration){
-					$(el).fadeIn(duration);
+				$('#demo1 img').eachStep(function(i, el, duration){
+					$(el).toggleClass('rotate');
 				});
 			},
 			demo2: function(){
@@ -85,7 +88,7 @@
 			
 			<div class="problem">
 				<h2>The Problem:</h2>
-				<p>When you iterate over jQuery objects using <code>$('img').each();</code> your callback function runs instantly on each element, but what if you wanted to <code>fadeOut()</code> each element in order rather than simultaneously? Example:</p><script src="https://gist.github.com/1112359.js?file=gistfile1.js"></script>
+				<p>When you iterate over jQuery objects using <code>$('img').each();</code> your callback function runs instantly on each element, but what if you wanted to apply <code>.addClass()</code> on each element in order rather than simultaneously? Example:</p><br /><script src="https://gist.github.com/1112359.js?file=gistfile1.js"></script>
 			</div>
 			<div class="solution">
 				<h2>The Solution:</h2>
@@ -112,7 +115,7 @@
 				
 				<div class="demo" id="demo2">
 					<div class="demo-nav">
-						<h3>Demo Two <span>Step through a Collection</span></h3>
+						<h3>Demo Two <span>Step through an Array</span></h3>
 						<a href="#" data-demo="demo2" class="demo-button">run demo</a>
 						<a href="#" class="view-source-button">view source</a>
 					</div>
