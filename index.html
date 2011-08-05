@@ -10,7 +10,8 @@
 	<script src="js/jquery.color.js"></script>
 	<script src="js/jquery.eachStep.js"></script>
 	<script>$(function(){	
-	
+
+		
 		for(var i=0; i<16; i++){
 			var j = (''+i).substr(-1);			
 			var g = (i>7) ? 'g/' : '';
@@ -55,7 +56,7 @@
 				 * val = the current collection value, eg: '#222222'
 				 * duration = the step duration, in this example '600'
 				 */
-				$.eachStep(collection, '800', function(key, val, duration){
+				$.eachStep(collection, '600', function(key, val, duration){
 				  // each step of the collection animate the .demo2-box backgroundColor
 				  // (requires the jquery.color plugin)
 				  $('.demo2-box').animate({'backgroundColor': val}, duration);
@@ -80,7 +81,7 @@
 			<p></p>
 			
 			<div id="nav">
-				<a href="https://github.com/mediaupstream/jquery-eachStep">Download <small>{ 518 bytes }</small></a>
+				<a href="https://github.com/mediaupstream/jquery-eachStep">Fork on Github</a><a href="https://raw.github.com/mediaupstream/jquery-eachStep/master/js/jquery.eachStep.min.js"Download v0.2 <small>Minified Source (1.35 kb)</small></a>
 			</div>
 		</div>
 		
@@ -92,7 +93,7 @@
 			</div>
 			<div class="solution">
 				<h2>The Solution:</h2>
-				<p>Place the callback functions inside <code>window.setTimeout()</code> and set the timeout <code>duration * i</code> where <code>i</code> is the step number. Example: </p>
+				<p>Place the callback functions inside <code><strike>window.setTimeout()</strike> <a href="http://blog.joelambert.co.uk/2011/06/01/a-better-settimeoutsetinterval/" title="An improved window.setTimeout function!">window.requestTimeout()</a></code> and set the timeout <code>duration * i</code> where <code>i</code> is the step number. Example: </p>
 				<script src="https://gist.github.com/1113256.js?file=gistfile1.js"></script>
 				<p style="clear:both">Which is exactly what <code>jQuery.eachStep</code> is doing behind the scenes!</p>
 			</div>
@@ -141,10 +142,24 @@
 					<b>function(index, Element, duration)</b> A function to execute for each matched element.
 					<br /><br /><br />
 
-					<sup>1</sup> - Due to limitations with <code>window.setTimeout</code> the actual duration time may be capped at around 4ms to 10ms. <small>(see: <a href="https://developer.mozilla.org/En/Window.setTimeout#section_7">https://developer.mozilla.org/En/Window.setTimeout#section_7</a>)</small>
+					<sup>1</sup> - <strike>Due to limitations with <code>window.setTimeout</code> the actual duration time may be capped at around 4ms to 10ms. <small>(see: <a href="https://developer.mozilla.org/En/Window.setTimeout#section_7">https://developer.mozilla.org/En/Window.setTimeout#section_7</a>)</small></strike> ... This has been resolved as of version 0.2, using an improved window.setTimeout method: <a href="http://blog.joelambert.co.uk/2011/06/01/a-better-settimeoutsetinterval/">http://blog.joelambert.co.uk/2011/06/01/a-better-settimeoutsetinterval/</a>
 					<br />
 					<br /> Click <code>view source</code> on the DEMOs above for more usage examples!
 				</p>
+			</div>
+			
+			<div id="changelog">
+				<h4>CHANGELOG</h4>
+				<strong>8/5/2011 - v0.2</strong>
+				<ul>
+					<li>Updated to use an improved "setTimeout" function: http://blog.joelambert.co.uk/2011/06/01/a-better-settimeoutsetinterval/</li>
+					<li>Resolved issue with minimum delay</li>
+				</ul>
+				
+				<strong>7/29/2011 - v0.1</strong>
+				<ul>
+					<li>initial commit, yo</li>
+				</ul>
 			</div>
 			
 			
@@ -157,5 +172,14 @@
 		<span>&#8734; Placeholder kittens thanks to <a href="http://placekitten.com/" title="Can Haz Placekitteh">{placekitten}</a></span>
 		
 	</div>
+	<!-- <script type="text/javascript">
+		var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+		document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+		<script type="text/javascript">
+		try {
+		var pageTracker = _gat._getTracker("UA-15679084-1");
+		pageTracker._trackPageview();
+		} catch(err) {}</script> -->
 </body>
 </html>

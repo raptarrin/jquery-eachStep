@@ -1,7 +1,12 @@
 /*
-eachStep v0.1 - http://mediaupstream.com/sandbox/jquery-eachStep
+eachStep v0.2 - http://mediaupstream.com/sandbox/jquery-eachStep
 by Derek Anderson - http://mediaupstream.com
 
+## Changelog
+
+8/5/2011 - v0.2
+- Updated to use an improved "setTimeout" function: http://blog.joelambert.co.uk/2011/06/01/a-better-settimeoutsetinterval/
+- Resolved issue with minimum delay
 
 
   )   _. mmeeoowwrr power!
@@ -33,6 +38,42 @@ THE SOFTWARE.
 */
 
 (function($){
+
+/**
+ * better setTimeout thanks to http://blog.joelambert.co.uk/2011/06/01/a-better-settimeoutsetinterval/
+ */
+window.requestTimeout = function(fn, delay) {
+    if( !window.requestAnimationFrame       && 
+        !window.webkitRequestAnimationFrame && 
+        !window.mozRequestAnimationFrame    && 
+        !window.oRequestAnimationFrame      && 
+        !window.msRequestAnimationFrame)
+            return window.setTimeout(fn, delay);
+
+    var start = new Date().getTime(),
+        handle = new Object();
+
+    function loop(){
+        var current = new Date().getTime(),
+        delta = current - start;
+
+        delta >= delay ? fn.call() : handle.value = requestAnimFrame(loop);
+    };
+
+    handle.value = requestAnimFrame(loop);
+    return handle;
+};
+
+window.clearRequestTimeout = function(handle) {
+    window.cancelAnimationFrame ? window.cancelAnimationFrame(handle.value) :
+    window.webkitCancelRequestAnimationFrame ? window.webkitCancelRequestAnimationFrame(handle.value)   :
+    window.mozCancelRequestAnimationFrame ? window.mozCancelRequestAnimationFrame(handle.value) :
+    window.oCancelRequestAnimationFrame ? window.oCancelRequestAnimationFrame(handle.value) :
+    window.msCancelRequestAnimationFrame ? msCancelRequestAnimationFrame(handle.value) :
+    clearTimeout(handle);
+};
+	
+
 // eachStep for Collections
 $.eachStep = function(collection, duration, callback) {
 	var step = '200'; // ms
@@ -46,7 +87,7 @@ $.eachStep = function(collection, duration, callback) {
 	if(step == 'fast'){ step = 200; }
 	if(typeof callback != "function"){ return false; }
 	return $.each(collection, function(i, val){
-		window.setTimeout(function(){
+		window.requestTimeout(function(){
 			callback(i, val, step);
 		},step*curStep);
 		curStep++;
@@ -65,7 +106,7 @@ $.fn.eachStep = function(duration, callback) {
 	if(step == 'fast'){ step = 200; }
 	if(typeof callback != "function"){ return false; }
 	return this.each(function(i, el) {        
-		window.setTimeout(function(){
+		window.requestTimeout(function(){
 			callback(i, el, step);
 		},step*i);
 	});
