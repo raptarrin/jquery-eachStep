@@ -9,10 +9,10 @@ Step through each element and execute a callback function in order
 **For use with jQuery Objects**  
 
     $('img').eachStep(600, function(i, el, duration){
-      $(el).fadeIn(duration);
+      $(el).toggleClass('rotate');
     });
 
-**For use with Arrays or Objects (Collections/Maps)**  
+**For use with Arrays or Objects**  
 
     var collection = [
        '#777777', '#444444', '#222222', '#249adb', 
@@ -28,17 +28,14 @@ Step through each element and execute a callback function in order
 
 `$.eachStep( Duration, function(index, Element, duration) )`
 
-**Duration** Optional string or number determining how long the step will run. default: 200ms <sup>1</sup>  
+**Duration** Optional string or number determining how long the step will run. default: 200ms
 **function(index, Element, duration)** A function to execute for each matched element.
   
   
 `jQuery.eachStep( Collection, Duration, function(index, Element, duration) )`
 
 **Collection** The object or array to iterate over.  
-**Duration** Optional string or number determining how long the step will run. default: 200ms <sup>1</sup>  
+**Duration** Optional string or number determining how long the step will run. default: 200ms
 **function(index, Element, duration)** A function to execute for each matched element.
-        
-  
-<sup>1</sup> - Due to limitations with `window.setTimeout` the actual duration time may be capped at around 4ms to 10ms. (see: <a href="https://developer.mozilla.org/En/Window.setTimeout#section_7">https://developer.mozilla.org/En/Window.setTimeout#section_7</a>)
-  
-Click `view source` on the DEMOs above for more usage examples!
+
+For demos and usage / code see: http://mediaupstream.com/sandbox/jquery-eachStep/

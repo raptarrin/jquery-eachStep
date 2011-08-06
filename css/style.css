@@ -41,6 +41,10 @@ q:before,q:after{
   outline:?????;
 } */
 
+strike {
+	text-shadow:0px 0px 0px transparent !important;
+}
+
 ins{
   text-decoration:none;
 }
